@@ -3,8 +3,8 @@ package com.kodilla.library.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,14 +24,14 @@ public class Reader {
 
     @Setter
     @NotBlank
-    @Length(max = 100)
-    @Column(name = "name", nullable = false)
+    @Size(max = 100)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
     @Setter
     @NotBlank
-    @Length(max = 100)
-    @Column(name = "surname", nullable = false)
+    @Size(max = 100)
+    @Column(name = "surname", nullable = false, length = 100)
     private String surname;
 
     @Setter
@@ -39,7 +39,7 @@ public class Reader {
     @Column(name = "date_of_account_creation", nullable = false)
     private LocalDateTime dateOfAccountCreation;
 
-    @OneToMany(mappedBy = "reader", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "reader", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rent> rents = new ArrayList<>();
 
     @Override
@@ -51,7 +51,7 @@ public class Reader {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return this.id != null ? this.id.hashCode() : 0;
     }
 
     public void addRent(Rent rent) {

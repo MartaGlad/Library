@@ -45,7 +45,7 @@ public class Rent {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return this.id != null ? this.id.hashCode() : 0;
     }
 
     public void setReader(Reader reader) {
@@ -66,7 +66,10 @@ public class Rent {
         if (!bookCopy.getRents().contains(this)) {
             bookCopy.getRents().add(this);
         }
+    }
 
+    public void completeRent() {
+        this.dateOfReturn = LocalDateTime.now();
     }
 }
 

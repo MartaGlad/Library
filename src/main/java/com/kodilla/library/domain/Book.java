@@ -1,9 +1,8 @@
 package com.kodilla.library.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,21 +20,22 @@ public class Book {
 
     @Setter
     @NotBlank
-    @Length(max = 100)
-    @Column(name = "title", nullable = false)
+    @Size(max = 100)
+    @Column(name = "title", nullable = false, length = 100)
     private String title;
 
     @Setter
     @NotBlank
-    @Length(max = 100)
-    @Column(name = "author", nullable = false)
+    @Size(max = 100)
+    @Column(name = "author", nullable = false,  length = 100)
     private String author;
 
     @Setter
+    @Positive
     @Column(name = "year_of_release", nullable = false)
     private int yearOfRelease;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookCopy> bookCopies = new ArrayList<>();
 
     @Override
@@ -47,7 +47,7 @@ public class Book {
 
     @Override
     public int hashCode() {
-        return this.getClass().hashCode();
+        return this.id != null ? this.id.hashCode() : 0;
     }
 
     public void addBookCopy(BookCopy bookCopy) {

@@ -30,7 +30,7 @@ public class BookCopy {
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    @OneToMany(mappedBy = "bookCopy", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "bookCopy", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rent> rents = new ArrayList<>();
 
     @Override
@@ -42,7 +42,7 @@ public class BookCopy {
 
     @Override
     public int hashCode(){
-        return getClass().hashCode();
+        return this.id != null ? this.id.hashCode() : 0;
     }
 
     public void setBook(Book book) {
@@ -52,4 +52,21 @@ public class BookCopy {
             book.getBookCopies().add(this);
         }
     }
+
+    public void markAsDamaged() {
+        this.status = Status.DAMAGED;
+    }
+
+    public void markAsLost() {
+        this.status = Status.LOST;
+    }
+
+    public void markAsAvailable() {
+        this.status = Status.AVAILABLE;
+    }
+
+    public void markAsRented() {
+        this.status = Status.RENTED;
+    }
+
 }
