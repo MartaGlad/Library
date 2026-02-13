@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
+
     long countByBookId(Long bookId);
-    long countByBookIdAndStatus(Long  bookId, Status status);
+    long countByBookIdAndStatus(Long bookId, Status status);
 }

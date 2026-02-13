@@ -1,5 +1,6 @@
 package com.kodilla.library.domain;
 
+import com.kodilla.library.exception.BookCopyChangeStatusException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -19,11 +20,10 @@ public class BookCopy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
-    @NonNull
+    @NotNull
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.AVAILABLE;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,38 +35,52 @@ public class BookCopy {
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (!(o instanceof BookCopy bookCopy)) return false;
         return this.id != null && this.id.equals(bookCopy.id);
     }
 
+
     @Override
-    public int hashCode(){
+    public int hashCode() {
+
         return this.id != null ? this.id.hashCode() : 0;
     }
 
+
     public void setBook(Book book) {
+
         if (book == null) return;
+
         this.book = book;
+
         if(!book.getBookCopies().contains(this)) {
             book.getBookCopies().add(this);
         }
     }
 
-    public void markAsDamaged() {
-        this.status = Status.DAMAGED;
+
+    private boolean isChangeStatusAllowed(Status newStatus) {
+
+        return switch (this.status) {
+            case AVAILABLE -> newStatus == Status.RENTED || newStatus == Status.DAMAGED || newStatus == Status.LOST;
+            case RENTED -> newStatus == Status.AVAILABLE || newStatus == Status.DAMAGED || newStatus == Status.LOST;
+            case DAMAGED, LOST -> false;
+        };
     }
 
-    public void markAsLost() {
-        this.status = Status.LOST;
+
+    public void changeStatus(Status newStatus) {
+
+        if (newStatus == null) throw new IllegalArgumentException("New status can't be null");
+
+        if (newStatus == this.status) return;
+
+        if (!isChangeStatusAllowed(newStatus)) throw new BookCopyChangeStatusException(this.status, newStatus);
+
+        this.status = newStatus;
     }
 
-    public void markAsAvailable() {
-        this.status = Status.AVAILABLE;
-    }
-
-    public void markAsRented() {
-        this.status = Status.RENTED;
-    }
 
 }

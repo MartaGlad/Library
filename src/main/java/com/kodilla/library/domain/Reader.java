@@ -44,17 +44,22 @@ public class Reader {
 
     @Override
     public boolean equals(Object o) {
-        if(this == o) return true;
-        if(!(o instanceof Reader reader)) return false;
+
+        if (this == o) return true;
+        if (!(o instanceof Reader reader)) return false;
         return this.id != null && this.id.equals(reader.id);
     }
 
+
     @Override
     public int hashCode() {
+
         return this.id != null ? this.id.hashCode() : 0;
     }
 
+
     public void addRent(Rent rent) {
+
         if(rent == null) return;
 
         if(!this.rents.contains(rent)) {

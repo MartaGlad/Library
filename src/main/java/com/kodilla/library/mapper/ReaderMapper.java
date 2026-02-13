@@ -3,32 +3,40 @@ package com.kodilla.library.mapper;
 import com.kodilla.library.domain.Reader;
 import com.kodilla.library.dto.ReaderCreateDto;
 import com.kodilla.library.dto.ReaderResponseDto;
+import com.kodilla.library.dto.RentResponseDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ReaderMapper {
 
-    public ReaderCreateDto mapToReaderCreateDto(Reader reader) {
-        return new ReaderCreateDto(reader.getId(), reader.getName(),
-                reader.getSurname(), reader.getDateOfAccountCreation(), List.of());
+    private final RentMapper rentMapper;
+
+    public Reader mapToReader(final ReaderCreateDto readerCreateDto) {
+
+        return new Reader(
+                null,
+                readerCreateDto.name(),
+                readerCreateDto.surname(),
+                readerCreateDto.dateOfAccountCreation(),
+                new ArrayList<>());
     }
 
-    public Reader mapToReader(ReaderCreateDto readerCreateDto) {
-        return new Reader(null, readerCreateDto.name(), readerCreateDto.surname(),
-                readerCreateDto.dateOfAccountCreation(), List.of());
-    }
 
-    public ReaderResponseDto mapToReaderResponseDto(Reader reader) {
-        return new ReaderResponseDto(reader.getId(), reader.getName(),
-                reader.getSurname(), reader.getDateOfAccountCreation(), List.of());
-    }
+    public ReaderResponseDto mapToReaderResponseDto(final Reader reader) {
 
-    public Reader mapToReader(ReaderResponseDto readerResponseDto) {
-        return new Reader(readerResponseDto.id(), readerResponseDto.name(),
-                readerResponseDto.surname(), readerResponseDto.dateOfAccountCreation(),List.of());
-    }
+        List<RentResponseDto> rentResponseDtoList = rentMapper.mapToRentResponseDtoList(reader.getRents());
 
+        return new ReaderResponseDto(
+                reader.getId(),
+                reader.getName(),
+                reader.getSurname(),
+                reader.getDateOfAccountCreation(),
+                rentResponseDtoList);
+    }
 }

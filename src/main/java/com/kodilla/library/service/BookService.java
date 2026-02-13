@@ -2,6 +2,7 @@ package com.kodilla.library.service;
 
 import com.kodilla.library.domain.Book;
 import com.kodilla.library.domain.BookCopy;
+import com.kodilla.library.exception.BookCopyNotFoundException;
 import com.kodilla.library.exception.BookNotFoundException;
 import com.kodilla.library.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,22 +18,32 @@ public class BookService {
 
     private final BookRepository bookRepository;
 
+
     public Book saveBook(final Book book) {
+
         return bookRepository.save(book);
     }
 
+
     @Transactional(readOnly = true)
     public Book getBookById(final Long id) {
-        return bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
     }
+
 
     @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
+
         return bookRepository.findAll();
     }
 
+
     public Book updateBook(final Long id, final Book newBook) {
-        Book fetchedBook = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+
+        Book fetchedBook = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
 
         fetchedBook.setTitle(newBook.getTitle());
         fetchedBook.setAuthor(newBook.getAuthor());
@@ -42,13 +53,16 @@ public class BookService {
         for (BookCopy newBookCopy : newBook.getBookCopies()) {
             newBookCopy.setBook(fetchedBook);
             fetchedBook.addBookCopy(newBookCopy);
-
         }
         return fetchedBook;
     }
 
+
     public void deleteBookById(final Long id) {
-        Book fetchedBook = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+
+        Book fetchedBook = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
+
         bookRepository.delete(fetchedBook);
 
     }

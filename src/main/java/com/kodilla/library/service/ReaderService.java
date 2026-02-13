@@ -17,25 +17,31 @@ public class ReaderService {
 
     private final ReaderRepository readerRepository;
 
-    public void save(final Reader reader) {
-        readerRepository.save(reader);
+    public Reader saveReader(final Reader reader) {
+
+       return readerRepository.save(reader);
     }
 
 
     @Transactional(readOnly = true)
     public Reader getReaderById(final Long id) {
-        return readerRepository.findById(id).orElseThrow(ReaderNotFoundException::new);
+
+        return readerRepository.findById(id)
+                .orElseThrow(() -> new ReaderNotFoundException(id));
     }
 
 
     @Transactional(readOnly = true)
     public List<Reader> getAllReaders() {
+
         return readerRepository.findAll();
     }
 
 
     public Reader updateReader(final Long id, final Reader newReader) {
-        Reader fetchedReader = readerRepository.findById(id).orElseThrow(ReaderNotFoundException::new);
+
+        Reader fetchedReader = readerRepository.findById(id)
+                .orElseThrow(() -> new ReaderNotFoundException(id));
 
         fetchedReader.setName(newReader.getName());
         fetchedReader.setSurname(newReader.getSurname());
@@ -50,9 +56,10 @@ public class ReaderService {
 
 
     public void deleteReaderById(final Long id) {
-        Reader reader = readerRepository.findById(id).orElseThrow(ReaderNotFoundException::new);
+
+        Reader reader = readerRepository.findById(id)
+                .orElseThrow(() -> new ReaderNotFoundException(id));
+
         readerRepository.delete(reader);
     }
-
-
 }

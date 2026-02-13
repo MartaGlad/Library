@@ -40,17 +40,22 @@ public class Book {
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (!(o instanceof Book book)) return false;
         return this.id != null && this.id.equals(book.id);
     }
 
+
     @Override
     public int hashCode() {
+
         return this.id != null ? this.id.hashCode() : 0;
     }
 
+
     public void addBookCopy(BookCopy bookCopy) {
+
         if (bookCopy == null) return;
 
         if (!this.bookCopies.contains(bookCopy)) {

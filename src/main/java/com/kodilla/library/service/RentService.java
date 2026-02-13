@@ -4,9 +4,7 @@ import com.kodilla.library.domain.BookCopy;
 import com.kodilla.library.domain.Reader;
 import com.kodilla.library.domain.Rent;
 import com.kodilla.library.domain.Status;
-import com.kodilla.library.exception.BookCopyChangeStatusException;
-import com.kodilla.library.exception.RentAlreadyCompletedException;
-import com.kodilla.library.exception.RentNotFoundException;
+import com.kodilla.library.exception.*;
 import com.kodilla.library.repository.RentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,24 +24,28 @@ public class RentService {
     private final ReaderService readerService;
 
     public Rent save(Rent rent) {
+
         return rentRepository.save(rent);
     }
 
 
     @Transactional(readOnly = true)
     public Rent getRentById(Long id) {
+
         return rentRepository.findById(id)
-                .orElseThrow(RentNotFoundException::new);
+                .orElseThrow(() -> new RentNotFoundException(id));
     }
 
 
     @Transactional(readOnly = true)
     public List<Rent> getAllRents() {
+
         return rentRepository.findAll();
     }
 
 
-    public void rentByBookCopyIdAndReaderId(final Long bookCopyId, final Long readerId) {
+    public Rent rentByBookCopyIdAndReaderId(final Long bookCopyId, final Long readerId) {
+
         BookCopy fetchedBookCopy = bookCopyService.getBookCopyById(bookCopyId);
 
         if (fetchedBookCopy.getStatus() != Status.AVAILABLE)
@@ -58,57 +60,51 @@ public class RentService {
         newRent.setReader(fetchedReader);
 
         newRent.setBookCopy(fetchedBookCopy);
-        fetchedBookCopy.markAsRented();
+        fetchedBookCopy.changeStatus(Status.RENTED);
 
-        rentRepository.save(newRent);
+        return rentRepository.save(newRent);
     }
 
 
-    public void returnBookCopyByRentId(final Long id) {
-        Rent fetchedRent = rentRepository.findById(id)
-                .orElseThrow(RentNotFoundException::new);
+    public Rent returnBookCopyByRentId(final Long id) {
 
-        if(fetchedRent.getDateOfReturn() != null)
-            throw new RentAlreadyCompletedException();
+        Rent fetchedRent = rentRepository.findById(id)
+                .orElseThrow(() -> new RentNotFoundException(id));
+
+        if (fetchedRent.getDateOfReturn() != null)
+            throw new RentAlreadyCompletedException(id);
 
         BookCopy fetchedBookCopy = fetchedRent.getBookCopy();
-        fetchedBookCopy.markAsAvailable();
+        fetchedBookCopy.changeStatus(Status.AVAILABLE);
 
         fetchedRent.completeRent();
+
+        return fetchedRent;
     }
 
 
-    public void processPaymentForLostBookCopyByRentId(final Long id) {
-        Rent fetchedRent = rentRepository.findById(id)
-                .orElseThrow(RentNotFoundException::new);
+    public Rent returnBookCopyAndProcessPaymentForDamagesByRentId(final Long id, final Status newStatus) {
 
-        if(fetchedRent.getDateOfReturn() != null)
-            throw new RentAlreadyCompletedException();
+        Rent fetchedRent = rentRepository.findById(id)
+                .orElseThrow(() -> new RentNotFoundException(id));
+
+        if (fetchedRent.getDateOfReturn() != null)
+            throw new RentAlreadyCompletedException(id);
 
         BookCopy fetchedBookCopy = fetchedRent.getBookCopy();
-        fetchedBookCopy.markAsLost();
+        fetchedBookCopy.changeStatus(newStatus);
 
         fetchedRent.completeRent();
-    }
 
-    public void processPaymentForDamagedBookCopyByRentId(final Long id) {
-        Rent fetchedRent = rentRepository.findById(id)
-                .orElseThrow(RentNotFoundException::new);
-
-        if(fetchedRent.getDateOfReturn() != null)
-            throw new RentAlreadyCompletedException();
-
-        BookCopy fetchedBookCopy = fetchedRent.getBookCopy();
-        fetchedBookCopy.markAsDamaged();
-
-        fetchedRent.completeRent();
+        return fetchedRent;
     }
 
 
     public void deleteRent(final Long id) {
-        Rent fetchRent = rentRepository.findById(id)
-                .orElseThrow(RentNotFoundException::new);
-        rentRepository.delete(fetchRent);
-    }
 
+        Rent fetchedRent = rentRepository.findById(id)
+                .orElseThrow(() -> new RentNotFoundException(id));
+
+        rentRepository.delete(fetchedRent);
+    }
 }
