@@ -1,7 +1,7 @@
 package com.kodilla.library.mapper;
 
 import com.kodilla.library.domain.Book;
-import com.kodilla.library.dto.BookCreateDto;
+import com.kodilla.library.dto.BookRequestDto;
 import com.kodilla.library.dto.BookResponseDto;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @Component
 public class BookMapper {
 
-    public Book mapToBook(final BookCreateDto bookCreateDto) {
+    public Book mapToBook(final BookRequestDto bookCreateDto) {
         return new Book (
                 null,
                 bookCreateDto.title(),

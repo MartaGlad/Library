@@ -1,7 +1,7 @@
 package com.kodilla.library.mapper;
 
 import com.kodilla.library.domain.Reader;
-import com.kodilla.library.dto.ReaderCreateDto;
+import com.kodilla.library.dto.ReaderRequestDto;
 import com.kodilla.library.dto.ReaderResponseDto;
 import com.kodilla.library.dto.RentResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +17,9 @@ public class ReaderMapper {
 
     private final RentMapper rentMapper;
 
-    public Reader mapToReader(final ReaderCreateDto readerCreateDto) {
+    public Reader mapToReader(final ReaderRequestDto readerCreateDto) {
 
-        return new Reader(
+        return new Reader (
                 null,
                 readerCreateDto.name(),
                 readerCreateDto.surname(),
@@ -32,7 +32,7 @@ public class ReaderMapper {
 
         List<RentResponseDto> rentResponseDtoList = rentMapper.mapToRentResponseDtoList(reader.getRents());
 
-        return new ReaderResponseDto(
+        return new ReaderResponseDto (
                 reader.getId(),
                 reader.getName(),
                 reader.getSurname(),

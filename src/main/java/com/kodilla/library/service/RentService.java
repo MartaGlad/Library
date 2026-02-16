@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @Service
 @Transactional
@@ -22,26 +22,6 @@ public class RentService {
     private final RentRepository rentRepository;
     private final BookCopyService bookCopyService;
     private final ReaderService readerService;
-
-    public Rent save(Rent rent) {
-
-        return rentRepository.save(rent);
-    }
-
-
-    @Transactional(readOnly = true)
-    public Rent getRentById(Long id) {
-
-        return rentRepository.findById(id)
-                .orElseThrow(() -> new RentNotFoundException(id));
-    }
-
-
-    @Transactional(readOnly = true)
-    public List<Rent> getAllRents() {
-
-        return rentRepository.findAll();
-    }
 
 
     public Rent rentByBookCopyIdAndReaderId(final Long bookCopyId, final Long readerId) {
@@ -100,11 +80,4 @@ public class RentService {
     }
 
 
-    public void deleteRent(final Long id) {
-
-        Rent fetchedRent = rentRepository.findById(id)
-                .orElseThrow(() -> new RentNotFoundException(id));
-
-        rentRepository.delete(fetchedRent);
-    }
 }

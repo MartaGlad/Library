@@ -1,4 +1,4 @@
-package com.kodilla.library.controller;
+package com.kodilla.library.controller.errorhandler;
 
 import com.kodilla.library.exception.*;
 import org.springframework.http.HttpStatus;

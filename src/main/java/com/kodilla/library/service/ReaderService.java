@@ -31,13 +31,6 @@ public class ReaderService {
     }
 
 
-    @Transactional(readOnly = true)
-    public List<Reader> getAllReaders() {
-
-        return readerRepository.findAll();
-    }
-
-
     public Reader updateReader(final Long id, final Reader newReader) {
 
         Reader fetchedReader = readerRepository.findById(id)

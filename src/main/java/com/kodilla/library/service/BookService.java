@@ -33,13 +33,6 @@ public class BookService {
     }
 
 
-    @Transactional(readOnly = true)
-    public List<Book> getAllBooks() {
-
-        return bookRepository.findAll();
-    }
-
-
     public Book updateBook(final Long id, final Book newBook) {
 
         Book fetchedBook = bookRepository.findById(id)
@@ -56,15 +49,4 @@ public class BookService {
         }
         return fetchedBook;
     }
-
-
-    public void deleteBookById(final Long id) {
-
-        Book fetchedBook = bookRepository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException(id));
-
-        bookRepository.delete(fetchedBook);
-
-    }
-
 }

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 @Transactional
@@ -19,11 +18,6 @@ public class BookCopyService {
 
     private final BookCopyRepository bookCopyRepository;
     private final BookService bookService;
-
-    public BookCopy save(final BookCopy bookCopy) {
-
-        return bookCopyRepository.save(bookCopy);
-    }
 
 
     @Transactional(readOnly = true)
@@ -34,13 +28,6 @@ public class BookCopyService {
     }
 
 
-    @Transactional(readOnly = true)
-    public List<BookCopy> getAllBookCopies() {
-
-        return bookCopyRepository.findAll();
-    }
-
-
     public BookCopy changeBookCopyStatusById(final Long id, final Status newStatus) {
 
         BookCopy bookCopy = bookCopyRepository.findById(id)
@@ -48,12 +35,6 @@ public class BookCopyService {
 
         bookCopy.changeStatus(newStatus);
         return bookCopy;
-    }
-
-
-    public long getBookCopyCountByBookId(final Long bookId) {
-
-        return bookCopyRepository.countByBookId(bookId);
     }
 
 
@@ -71,14 +52,5 @@ public class BookCopyService {
         newBookCopy.setBook(book);
 
         return bookCopyRepository.save(newBookCopy);
-    }
-
-
-    public void deleteBookCopyById(final Long id) {
-
-        BookCopy bookCopy = bookCopyRepository.findById(id)
-                .orElseThrow(() -> new BookCopyNotFoundException(id));
-
-        bookCopyRepository.delete(bookCopy);
     }
 }
