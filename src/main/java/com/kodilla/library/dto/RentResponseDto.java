@@ -1,7 +1,7 @@
 package com.kodilla.library.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-public record RentResponseDto(Long id, LocalDateTime dateOfRent, LocalDateTime dateOfReturn, Long readerId,
+public record RentResponseDto(Long id, LocalDate dateOfRent, LocalDate dateOfReturn, Long readerId,
                               Long bookCopyId, String bookCopyTitle) {
 }

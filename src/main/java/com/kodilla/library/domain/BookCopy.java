@@ -21,7 +21,7 @@ public class BookCopy {
     private Long id;
 
     @NotNull
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private Status status = Status.AVAILABLE;
 

@@ -1,7 +1,7 @@
 package com.kodilla.library.controller;
 
 import com.kodilla.library.domain.BookCopy;
-import com.kodilla.library.dto.BookCopyChangeStatusRequestDto;
+import com.kodilla.library.dto.BookCopyChangeStatusDto;
 import com.kodilla.library.dto.BookCopyCreateDto;
 import com.kodilla.library.dto.BookCopyResponseDto;
 import com.kodilla.library.mapper.BookCopyMapper;
@@ -34,9 +34,9 @@ public class BookCopyController {
 
     @PatchMapping("/{id}/status")
     public ResponseEntity<BookCopyResponseDto> changeStatus (
-            @PathVariable Long id, @Valid @RequestBody BookCopyChangeStatusRequestDto bookCopyChangeStatusRequestDto) {
+            @PathVariable Long id, @Valid @RequestBody BookCopyChangeStatusDto bookCopyChangeStatusDto) {
 
-        BookCopy bookCopyUpdated = bookCopyService.changeBookCopyStatusById(id, bookCopyChangeStatusRequestDto.status());
+        BookCopy bookCopyUpdated = bookCopyService.changeBookCopyStatusById(id, bookCopyChangeStatusDto.status());
 
         return ResponseEntity.ok(bookCopyMapper.mapToBookCopyResponseDto(bookCopyUpdated));
     }

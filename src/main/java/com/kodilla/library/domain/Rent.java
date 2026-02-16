@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -20,11 +20,11 @@ public class Rent {
     @Setter
     @NotNull
     @Column(name = "date_of_rent",  nullable = false)
-    private LocalDateTime dateOfRent;
+    private LocalDate dateOfRent;
 
     @Setter
     @Column(name = "date_of_return")
-    private LocalDateTime dateOfReturn;
+    private LocalDate dateOfReturn;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -78,7 +78,7 @@ public class Rent {
 
     public void completeRent() {
 
-        this.dateOfReturn = LocalDateTime.now();
+        this.dateOfReturn = LocalDate.now();
     }
 }
 

@@ -10,7 +10,7 @@ public class BookCopyChangeStatusException extends RuntimeException {
 
 
     public BookCopyChangeStatusException(Status currentStatus, Status newStatus) {
-        super("Can't change " + currentStatus + " to " + newStatus);
+        super("Can't change " + currentStatus + " to " + newStatus + ".");
     }
 
 }

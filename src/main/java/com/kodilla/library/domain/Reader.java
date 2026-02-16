@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class Reader {
     @Setter
     @NotNull
     @Column(name = "date_of_account_creation", nullable = false)
-    private LocalDateTime dateOfAccountCreation;
+    private LocalDate dateOfAccountCreation;
 
     @OneToMany(mappedBy = "reader", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rent> rents = new ArrayList<>();
@@ -60,13 +60,13 @@ public class Reader {
 
     public void addRent(Rent rent) {
 
-        if(rent == null) return;
+        if (rent == null) return;
 
-        if(!this.rents.contains(rent)) {
+        if (!this.rents.contains(rent)) {
             this.rents.add(rent);
         }
 
-        if(rent.getReader() != this) {
+        if (rent.getReader() != this) {
             rent.setReader(this);
         }
 

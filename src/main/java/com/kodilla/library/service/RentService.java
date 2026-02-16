@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 
 @Service
 @Transactional
@@ -35,7 +34,7 @@ public class RentService {
 
         Rent newRent = new Rent();
 
-        newRent.setDateOfRent(LocalDateTime.now());
+        newRent.setDateOfRent(LocalDate.now());
 
         newRent.setReader(fetchedReader);
 

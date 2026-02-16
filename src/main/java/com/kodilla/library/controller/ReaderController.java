@@ -1,8 +1,9 @@
 package com.kodilla.library.controller;
 
 import com.kodilla.library.domain.Reader;
-import com.kodilla.library.dto.ReaderRequestDto;
+import com.kodilla.library.dto.ReaderCreateDto;
 import com.kodilla.library.dto.ReaderResponseDto;
+import com.kodilla.library.dto.ReaderUpdateDto;
 import com.kodilla.library.mapper.ReaderMapper;
 import com.kodilla.library.service.ReaderService;
 import jakarta.validation.Valid;
@@ -21,9 +22,9 @@ public class ReaderController {
     private final ReaderService readerService;
 
     @PostMapping
-    public ResponseEntity<ReaderResponseDto> addReader (@Valid @RequestBody ReaderRequestDto readerRequestDto) {
+    public ResponseEntity<ReaderResponseDto> addReader (@Valid @RequestBody ReaderCreateDto readerCreateDto) {
 
-        Reader reader = readerService.saveReader(readerMapper.mapToReader(readerRequestDto));
+        Reader reader = readerService.saveReader(readerMapper.mapToReader(readerCreateDto));
 
         return ResponseEntity
                 .created(URI.create("/readers/" + reader.getId()))
@@ -31,21 +32,12 @@ public class ReaderController {
     }
 
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<ReaderResponseDto> updateReader (
-            @PathVariable Long id, @Valid @RequestBody ReaderRequestDto readerRequestDto) {
+            @PathVariable Long id, @Valid @RequestBody ReaderUpdateDto readerUpdateDto) {
 
-        Reader readerUpdated = readerService.updateReader(id, readerMapper.mapToReader(readerRequestDto));
+        Reader readerUpdated = readerService.updateReader(id, readerUpdateDto);
 
         return ResponseEntity.ok(readerMapper.mapToReaderResponseDto(readerUpdated));
-    }
-
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReader(@PathVariable Long id) {
-
-        readerService.deleteReaderById(id);
-
-        return ResponseEntity.noContent().build();
     }
 }

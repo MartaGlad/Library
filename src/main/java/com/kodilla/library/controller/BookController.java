@@ -1,8 +1,9 @@
 package com.kodilla.library.controller;
 
 import com.kodilla.library.domain.Book;
-import com.kodilla.library.dto.BookRequestDto;
+import com.kodilla.library.dto.BookCreateDto;
 import com.kodilla.library.dto.BookResponseDto;
+import com.kodilla.library.dto.BookUpdateDto;
 import com.kodilla.library.mapper.BookMapper;
 import com.kodilla.library.service.BookService;
 import jakarta.validation.Valid;
@@ -21,7 +22,7 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping
-    public ResponseEntity<BookResponseDto> addBook (@Valid @RequestBody BookRequestDto bookCreateDto) {
+    public ResponseEntity<BookResponseDto> addBook (@Valid @RequestBody BookCreateDto bookCreateDto) {
 
         Book book = bookService.saveBook(bookMapper.mapToBook(bookCreateDto));
 
@@ -31,11 +32,11 @@ public class BookController {
     }
 
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<BookResponseDto> updateBook
-            (@PathVariable Long id, @Valid @RequestBody BookRequestDto bookRequestDto) {
+            (@PathVariable Long id, @Valid @RequestBody BookUpdateDto bookUpdateDto) {
 
-        Book bookUpdated = bookService.updateBook(id, bookMapper.mapToBook(bookRequestDto));
+        Book bookUpdated = bookService.updateBook(id, bookUpdateDto);
 
         return ResponseEntity.ok().body(bookMapper.mapToBookResponseDto(bookUpdated));
 

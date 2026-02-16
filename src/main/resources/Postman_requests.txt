@@ -1,0 +1,21 @@
+#Endpoints
+
+#Reader
+POST http://localhost:8080/library/v1/readers/ { name: "John", "surname": "Smith" }
+PATCH //localhost:8080/library/v1/readers/1 { "surname" : "Johnson" }
+
+#Book
+POST http://localhost:8080/library/v1/books/ { "title": "Lion King", "author": "Justyn Korman", "yearOfRelease": 1994 }
+PATCH //localhost:8080/library/v1/books/1 { "yearOfRelease": 1995 }
+
+#BookCopy
+POST http://localhost:8080/library/v1/book-copies/1 { "bookId": 1 }
+PATCH http://localhost:8080/library/v1/book-copies/2/status { "status": "LOST" }
+GET http://localhost:8080/library/v1/book-copies/1/available-count
+
+#Rent
+POST http://localhost:8080/library/v1/rents/borrowing/4/1
+POST http://localhost:8080/library/v1/rents/return/2
+POST http://localhost:8080/library/v1/rents/return/1/damaged
+POST http://localhost:8080/library/v1/rents/return/2/lost
+

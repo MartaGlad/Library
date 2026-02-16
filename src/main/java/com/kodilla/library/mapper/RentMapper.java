@@ -14,16 +14,18 @@ public class RentMapper {
     public RentResponseDto mapToRentResponseDto(final Rent rent) {
 
         return new RentResponseDto (
+
                 rent.getId(),
                 rent.getDateOfRent(),
                 rent.getDateOfReturn(),
                 rent.getReader().getId(),
-                rent.getBookCopy().getBook().getId(),
+                rent.getBookCopy().getId(),
                 rent.getBookCopy().getBook().getTitle());
     }
 
 
     public List<RentResponseDto> mapToRentResponseDtoList(final List<Rent> rents) {
+
         return rents.stream()
                 .map(this::mapToRentResponseDto)
                 .collect(Collectors.toList());

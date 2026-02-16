@@ -1,14 +1,15 @@
 package com.kodilla.library.service;
 
 import com.kodilla.library.domain.Reader;
-import com.kodilla.library.domain.Rent;
+import com.kodilla.library.dto.ReaderUpdateDto;
 import com.kodilla.library.exception.ReaderNotFoundException;
+import com.kodilla.library.mapper.ReaderMapper;
 import com.kodilla.library.repository.ReaderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @Service
 @Transactional
@@ -16,8 +17,10 @@ import java.util.List;
 public class ReaderService {
 
     private final ReaderRepository readerRepository;
+    private final ReaderMapper readerMapper;
 
     public Reader saveReader(final Reader reader) {
+        reader.setDateOfAccountCreation(LocalDate.now());
 
        return readerRepository.save(reader);
     }
@@ -31,28 +34,13 @@ public class ReaderService {
     }
 
 
-    public Reader updateReader(final Long id, final Reader newReader) {
+    public Reader updateReader(final Long id, final ReaderUpdateDto readerUpdateDto) {
 
         Reader fetchedReader = readerRepository.findById(id)
                 .orElseThrow(() -> new ReaderNotFoundException(id));
 
-        fetchedReader.setName(newReader.getName());
-        fetchedReader.setSurname(newReader.getSurname());
+        readerMapper.mapToReader(fetchedReader, readerUpdateDto);
 
-        fetchedReader.getRents().clear();
-        for(Rent newRent : newReader.getRents()) {
-            newRent.setReader(fetchedReader);
-            fetchedReader.addRent(newRent);
-        }
         return fetchedReader;
-    }
-
-
-    public void deleteReaderById(final Long id) {
-
-        Reader reader = readerRepository.findById(id)
-                .orElseThrow(() -> new ReaderNotFoundException(id));
-
-        readerRepository.delete(reader);
     }
 }

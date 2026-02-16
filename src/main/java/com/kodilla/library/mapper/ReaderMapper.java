@@ -1,9 +1,7 @@
 package com.kodilla.library.mapper;
 
 import com.kodilla.library.domain.Reader;
-import com.kodilla.library.dto.ReaderRequestDto;
-import com.kodilla.library.dto.ReaderResponseDto;
-import com.kodilla.library.dto.RentResponseDto;
+import com.kodilla.library.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,14 +15,26 @@ public class ReaderMapper {
 
     private final RentMapper rentMapper;
 
-    public Reader mapToReader(final ReaderRequestDto readerCreateDto) {
+    public Reader mapToReader(final ReaderCreateDto readerCreateDto) {
 
         return new Reader (
                 null,
                 readerCreateDto.name(),
                 readerCreateDto.surname(),
-                readerCreateDto.dateOfAccountCreation(),
+                null,
                 new ArrayList<>());
+    }
+
+
+    public void mapToReader(final Reader reader, final ReaderUpdateDto readerUpdateDto) {
+
+        if (readerUpdateDto.name() != null) {
+            reader.setName(readerUpdateDto.name());
+        }
+
+        if (readerUpdateDto.surname() != null) {
+            reader.setSurname(readerUpdateDto.surname());
+        }
     }
 
 
