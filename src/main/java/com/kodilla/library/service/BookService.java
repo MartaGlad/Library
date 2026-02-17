@@ -1,7 +1,6 @@
 package com.kodilla.library.service;
 
 import com.kodilla.library.domain.Book;
-import com.kodilla.library.domain.BookCopy;
 import com.kodilla.library.dto.BookUpdateDto;
 import com.kodilla.library.exception.BookNotFoundException;
 import com.kodilla.library.mapper.BookMapper;

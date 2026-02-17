@@ -61,7 +61,7 @@ public class BookCopy {
     }
 
 
-    private boolean isChangeStatusAllowed(Status newStatus) {
+    private boolean isChangeStatusAllowed (Status newStatus) {
 
         return switch (this.status) {
             case AVAILABLE -> newStatus == Status.RENTED || newStatus == Status.DAMAGED || newStatus == Status.LOST;
@@ -71,7 +71,7 @@ public class BookCopy {
     }
 
 
-    public void changeStatus(Status newStatus) {
+    public void changeStatus (Status newStatus) {
 
         if (newStatus == null) throw new IllegalArgumentException("New status can't be null");
 

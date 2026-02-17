@@ -19,6 +19,16 @@ public class BookCopyService {
     private final BookCopyRepository bookCopyRepository;
     private final BookService bookService;
 
+    public BookCopy addNewBookCopy(final BookCopyCreateDto bookCopyCreateDto) {
+
+        Book book = bookService.getBookById(bookCopyCreateDto.bookId());
+
+        BookCopy newBookCopy = new BookCopy();
+        newBookCopy.setBook(book);
+
+        return bookCopyRepository.save(newBookCopy);
+    }
+
 
     @Transactional(readOnly = true)
     public BookCopy getBookCopyById(final Long id) {
@@ -41,16 +51,5 @@ public class BookCopyService {
     public long getBookCopyAvailableCountByBookId(final Long bookId) {
 
         return bookCopyRepository.countByBookIdAndStatus(bookId, Status.AVAILABLE);
-    }
-
-
-    public BookCopy addNewBookCopy(final BookCopyCreateDto bookCopyCreateDto) {
-
-        Book book = bookService.getBookById(bookCopyCreateDto.bookId());
-
-        BookCopy newBookCopy = new BookCopy();
-        newBookCopy.setBook(book);
-
-        return bookCopyRepository.save(newBookCopy);
     }
 }

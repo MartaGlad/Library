@@ -77,6 +77,4 @@ public class RentService {
 
         return fetchedRent;
     }
-
-
 }

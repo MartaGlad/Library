@@ -20,6 +20,7 @@ public class ReaderService {
     private final ReaderMapper readerMapper;
 
     public Reader saveReader(final Reader reader) {
+
         reader.setDateOfAccountCreation(LocalDate.now());
 
        return readerRepository.save(reader);
