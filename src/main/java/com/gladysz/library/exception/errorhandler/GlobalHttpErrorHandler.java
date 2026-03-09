@@ -1,6 +1,11 @@
-package com.gladysz.library.controller.errorhandler;
+package com.gladysz.library.exception.errorhandler;
 
-import com.gladysz.library.exception.*;
+import com.gladysz.library.exception.book.BookNotFoundException;
+import com.gladysz.library.exception.bookcopy.BookCopyChangeStatusException;
+import com.gladysz.library.exception.bookcopy.BookCopyNotFoundException;
+import com.gladysz.library.exception.reader.ReaderNotFoundException;
+import com.gladysz.library.exception.rent.RentAlreadyCompletedException;
+import com.gladysz.library.exception.rent.RentNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

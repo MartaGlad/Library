@@ -1,4 +1,4 @@
-package com.gladysz.library.exception;
+package com.gladysz.library.exception.book;
 
 public class BookNotFoundException extends RuntimeException {
 

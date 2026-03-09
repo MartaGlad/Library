@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/readers")
+@RequestMapping("/api/v1/readers")
 @RequiredArgsConstructor
 public class ReaderController {
 

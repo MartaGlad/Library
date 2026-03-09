@@ -1,4 +1,4 @@
-package com.gladysz.library.exception;
+package com.gladysz.library.exception.bookcopy;
 
 import com.gladysz.library.domain.Status;
 

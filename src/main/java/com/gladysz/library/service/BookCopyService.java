@@ -4,7 +4,7 @@ import com.gladysz.library.domain.Book;
 import com.gladysz.library.domain.BookCopy;
 import com.gladysz.library.domain.Status;
 import com.gladysz.library.dto.BookCopyCreateDto;
-import com.gladysz.library.exception.BookCopyNotFoundException;
+import com.gladysz.library.exception.bookcopy.BookCopyNotFoundException;
 import com.gladysz.library.repository.BookCopyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

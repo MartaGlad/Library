@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/book-copies")
+@RequestMapping("/api/v1/book-copies")
 @RequiredArgsConstructor
 public class BookCopyController {
 

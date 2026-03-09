@@ -2,7 +2,7 @@ package com.gladysz.library.service;
 
 import com.gladysz.library.domain.Book;
 import com.gladysz.library.dto.BookUpdateDto;
-import com.gladysz.library.exception.BookNotFoundException;
+import com.gladysz.library.exception.book.BookNotFoundException;
 import com.gladysz.library.mapper.BookMapper;
 import com.gladysz.library.repository.BookRepository;
 import org.junit.jupiter.api.BeforeEach;

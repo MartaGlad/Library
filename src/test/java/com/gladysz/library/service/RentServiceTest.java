@@ -1,9 +1,9 @@
 package com.gladysz.library.service;
 
 import com.gladysz.library.domain.*;
-import com.gladysz.library.exception.BookCopyChangeStatusException;
-import com.gladysz.library.exception.RentAlreadyCompletedException;
-import com.gladysz.library.exception.RentNotFoundException;
+import com.gladysz.library.exception.bookcopy.BookCopyChangeStatusException;
+import com.gladysz.library.exception.rent.RentAlreadyCompletedException;
+import com.gladysz.library.exception.rent.RentNotFoundException;
 import com.gladysz.library.repository.RentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

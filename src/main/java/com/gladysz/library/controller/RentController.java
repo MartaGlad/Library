@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/rents")
+@RequestMapping("/api/v1/rents")
 @RequiredArgsConstructor
 public class RentController {
 

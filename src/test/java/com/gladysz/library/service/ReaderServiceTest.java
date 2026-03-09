@@ -2,7 +2,7 @@ package com.gladysz.library.service;
 
 import com.gladysz.library.domain.Reader;
 import com.gladysz.library.dto.ReaderUpdateDto;
-import com.gladysz.library.exception.ReaderNotFoundException;
+import com.gladysz.library.exception.reader.ReaderNotFoundException;
 import com.gladysz.library.mapper.ReaderMapper;
 import com.gladysz.library.repository.ReaderRepository;
 import org.junit.jupiter.api.BeforeEach;

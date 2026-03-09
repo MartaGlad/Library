@@ -1,4 +1,4 @@
-package com.gladysz.library.exception;
+package com.gladysz.library.exception.rent;
 
 public class RentNotFoundException extends RuntimeException {
 

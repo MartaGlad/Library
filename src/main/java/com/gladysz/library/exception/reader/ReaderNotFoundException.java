@@ -1,4 +1,4 @@
-package com.gladysz.library.exception;
+package com.gladysz.library.exception.reader;
 
 public class ReaderNotFoundException extends RuntimeException {
 

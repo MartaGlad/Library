@@ -1,4 +1,4 @@
-package com.gladysz.library.exception;
+package com.gladysz.library.exception.bookcopy;
 
 public class BookCopyNotFoundException extends RuntimeException {
 

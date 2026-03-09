@@ -1,6 +1,6 @@
 package com.gladysz.library.domain;
 
-import com.gladysz.library.exception.BookCopyChangeStatusException;
+import com.gladysz.library.exception.bookcopy.BookCopyChangeStatusException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
